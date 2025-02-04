@@ -1,3 +1,66 @@
 [
-   
+    {
+        "role": "user",
+        "content": "Can you listen to me?"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm all ears, Joel. Go ahead and ask me anything."
+    },
+    {
+        "role": "user",
+        "content": "Can you see me?"
+    },
+    {
+        "role": "assistant",
+        "content": "Yes, I see you. You are taking a selfie."
+    },
+    {
+        "role": "user",
+        "content": "Actually i am not taking a selfie i am actually taking a video of you."
+    },
+    {
+        "role": "assistant",
+        "content": "I see what's going on! You're holding your smartphone vertically in front of your face, and I can see the light-pink wall and dark brown door behind you. You have a neutral to slightly serious expression. And yes, I can confirm that you're recording a video, not just taking a still photo."
+    },
+    {
+        "role": "user",
+        "content": "Okay thank you janu you are working good."
+    },
+    {
+        "role": "assistant",
+        "content": "You're welcome, Joel! I'm glad to be of assistance."
+    },
+    {
+        "role": "user",
+        "content": "What is the top price of tesla?"
+    },
+    {
+        "role": "assistant",
+        "content": "According to the provided search results, the top price of Tesla is \u20b9 2.00 Cr* for the Tesla Model X, as mentioned in the description of the search result from 91Wheels."
+    },
+    {
+        "role": "user",
+        "content": "Actually i was not asking about top i said stoke."
+    },
+    {
+        "role": "assistant",
+        "content": "I apologize for the mistake! As of my knowledge cutoff, the stock price of Tesla (TSLA) is around $173.44 USD."
+    },
+    {
+        "role": "user",
+        "content": "Thank you jarvis."
+    },
+    {
+        "role": "assistant",
+        "content": "You're welcome, Joel!"
+    },
+    {
+        "role": "user",
+        "content": "Thank you."
+    },
+    {
+        "role": "assistant",
+        "content": "You're welcome!"
+    }
 ]
