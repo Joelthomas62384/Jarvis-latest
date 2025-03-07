@@ -25,10 +25,8 @@ import threading
 import json
 import os
 
-# For notifications
 from plyer import notification
 
-# Load environment variables
 env_vars = dotenv_values(".env")
 Username = env_vars.get("Username")
 Assistantname = env_vars.get("Assistantname")
@@ -100,28 +98,23 @@ def MainExecution():
     print(f"Decision: {Decision}")
     print("")
 
-    # Check for general and realtime commands
     G = any([i for i in Decision if i.startswith("general")])
     R = any([i for i in Decision if i.startswith("realtime")])
-    # Merge the queries from general and realtime if available
     Merged_query = " and ".join(
         [" ".join(i.split()[1:]) for i in Decision if i.startswith("general") or i.startswith("realtime")]
     )
 
-    # Check if any decision includes image generation
     for queries in Decision:
         if "generate " in queries:
             ImageGenerationQuery = str(queries)
             ImageExecution = True
 
-    # Check if any decision requires task automation
     for queries in Decision:
         if not TaskExecution:
             if any(queries.startswith(func) for func in Functions):
                 run(Automation(list(Decision)))
                 TaskExecution = True
 
-    # Handle image generation tasks
     if ImageExecution:
         with open(r"Frontend\Files\ImageGeneration.data", "w") as file:
             file.write(f"{ImageGenerationQuery},True")
@@ -133,7 +126,6 @@ def MainExecution():
         except Exception as e:
             print(f"Error Generating Image: {e}")
 
-    # Check if the decision includes a realtime query
     if (G and R) or R:
         SetAssistantStatus("Searching...")
         Answer = RealtimeSearchEngine(QueryModifier(Merged_query))
@@ -142,7 +134,6 @@ def MainExecution():
         TextToSpeech(Answer)
         return True
     else:
-        # Process each decision command individually
         for Queries in Decision:
             if "general " in Queries:
                 SetAssistantStatus("Thinking...")
@@ -161,13 +152,17 @@ def MainExecution():
                 TextToSpeech(Answer)
                 return True
             elif "webcam" in Queries:
-                # New branch for handling webcam queries using ImageChatBog
                 SetAssistantStatus("Capturing image...")
                 QueryFinal = Queries.replace("webcam ", "")
                 Answer = ImageChatBog(QueryModifier(QueryFinal))
                 ShowTextToScreen(f"{Assistantname} : {Answer}")
                 SetAssistantStatus("Answering...")
                 TextToSpeech(Answer)
+
+            elif "fileupload" in Queries:
+                process = subprocess.Popen(["python", "FileUploader/gui.py"])
+                SetAssistantStatus("Opening File Uploader...")
+                TextToSpeech("Your data will be safe with me")
                 return True
             elif "exit" in Queries:
                 QueryFinal = "Okay, Bye!"
@@ -195,20 +190,18 @@ def SecondThread():
 def ReminderNotificationThread():
     """Background thread to send a notification every 30 minutes reminding you to take a break."""
     while True:
-        sleep(60*2)# Sleep for 30 minutes (1800 seconds)
+        sleep(60*2)
         notification.notify(
             title="Reminder",
             message="Go drink some water and stand up for a break!",
             app_name=Assistantname,
-            timeout=10  # Duration in seconds for which the notification stays visible
+            timeout=10
         )
 
 if __name__ == "__main__":
-    # Start the background thread for reminders
     reminder_thread = threading.Thread(target=ReminderNotificationThread, daemon=True)
     reminder_thread.start()
 
-    # Start the main threads for the assistant
     thread2 = threading.Thread(target=FirstThread, daemon=True)
     thread2.start()
     SecondThread()

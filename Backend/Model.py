@@ -12,7 +12,7 @@ co = cohere.Client(api_key=CohereAPIKey)
 
 funcs = [
     'exit','general', 'realtime','open','close','play','generate image',
-    'system','content','google search', 'youtube','reminder', "webcam"
+    'system','content','google search', 'youtube','reminder', "webcam",'fileupload'
 ]
 
 
@@ -73,7 +73,17 @@ You will decide whether a query is a 'general' query, a 'realtime' query, or is 
 
 -> Respond with 'content (topic)' if a query requests written content (e.g., emails, applications, code).  
 
+
+
 -> Respond with 'google search (topic)' or 'youtube search (topic)' for search queries.  
+
+-> Respond with 'fileupload (topic)' if the query wants to save an image from the user.  
+Example:
+  - Query: "I need to save my medical files'  → Response: 'fileupload'
+  - Query: "My new blood test report came so I want to save it '  → Response: 'fileupload'
+
+
+
 
 -> If multiple tasks are requested, respond with each task separately.  
    Example:  
